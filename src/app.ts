@@ -60,7 +60,7 @@ export default class App {
         /**
          * start listening
          */
-        App.instance.listen(process.env.HTTP_PORT);
+        App.instance.listen(process.env.HTTP_PORT || 4489);
         App.defaultApp = App.instance;
 
         /**
