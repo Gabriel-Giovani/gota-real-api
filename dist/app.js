@@ -46,7 +46,7 @@ class App {
         /**
          * start listening
          */
-        App.instance.listen(process.env.HTTP_PORT || 4489);
+        App.instance.listen(process.env.PORT || 4489);
         App.defaultApp = App.instance;
         /**
          * indicates app is fully loaded
