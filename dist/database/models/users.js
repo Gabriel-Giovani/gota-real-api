@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
+const error_1 = require("./../../components/error");
 const sequelize_1 = require("sequelize");
 const database_1 = require("../../services/database");
 class Users extends sequelize_1.Model {
@@ -20,17 +20,31 @@ class Users extends sequelize_1.Model {
         this.sequelize = sequelize;
         return this;
     }
-    static getAllUsers() {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const sql = yield this.findAll({
-                attributes: { exclude: ['updatedAt'] },
-                where: { deleted: 0 }
-            });
-            console.log(sql);
-            return database_1.default.getResults(sql);
+    static async getAllUsers() {
+        const sql = await this.findAll({
+            attributes: { exclude: ['updatedAt'] },
+            where: { deleted: 0 }
         });
+        return database_1.default.getResults(sql);
+    }
+    static async findByUsername(username) {
+        const sql = await this.findOne({
+            where: { username }
+        });
+        let data = database_1.default.getFirstResult(sql);
+        if (data)
+            return data;
+        throw new Error(error_1.EErrors.USER_NOT_FOUND);
+    }
+    static async createUser(name, username, email, master, password) {
+        const fromBody = { name, username, email, master, password, deleted: 0 };
+        const sql = await this.create(fromBody);
+        const data = database_1.default.getFirstResult(sql);
+        if (data)
+            return data;
+        throw new Error(error_1.EErrors.CREATE_USER_FAIL);
     }
 }
-Users.sequelize = null;
 exports.default = Users;
+Users.sequelize = null;
 //# sourceMappingURL=users.js.map

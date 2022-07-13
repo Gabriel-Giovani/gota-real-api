@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 const logger_1 = require("./services/logger");
 const moment = require("moment");
 const express = require("express");
@@ -25,7 +24,7 @@ class App {
         app.use(cors());
         app.use(requestUuid_1.default);
         app.use(logger_1.logRequest);
-        routes_1.default();
+        (0, routes_1.default)();
         // app.use(Sentry.Handlers.errorHandler());
         app.use(function onError(err, req, res, next) {
             console.error('>>', err);
@@ -47,7 +46,7 @@ class App {
         /**
          * start listening
          */
-        App.instance.listen(process.env.HTTP_PORT);
+        App.instance.listen(process.env.HTTP_PORT || 4489);
         App.defaultApp = App.instance;
         /**
          * indicates app is fully loaded
@@ -57,32 +56,30 @@ class App {
          * log start message
          */
         let startMsg = `API Started on port ${process.env.HTTP_PORT} at ${moment().format()}`;
-        logger_1.logInfo(startMsg);
+        (0, logger_1.logInfo)(startMsg);
         Sentry.captureMessage(startMsg);
     }
-    start() {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            /**
-             * log start message
-             */
-            logger_1.logInfo(`Currently Server Version: v${pkg.version}`);
-            /**
-             * override default/prototype functions
-             */
-            utils_1.default.overrideDefaults();
-            /**
-             * creates database service / connect
-             */
-            yield database_1.default.create();
-            /**
-             * start web server
-             */
-            this.startServer();
-        });
+    async start() {
+        /**
+         * log start message
+         */
+        (0, logger_1.logInfo)(`Currently Server Version: v${pkg.version}`);
+        /**
+         * override default/prototype functions
+         */
+        utils_1.default.overrideDefaults();
+        /**
+         * creates database service / connect
+         */
+        await database_1.default.create();
+        /**
+         * start web server
+         */
+        this.startServer();
     }
 }
+exports.default = App;
 App.fullyLoaded = false;
 App.instance = express();
 App.defaultApp = null;
-exports.default = App;
 //# sourceMappingURL=app.js.map

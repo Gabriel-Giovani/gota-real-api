@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
+exports.denyAccess = exports.useRoute = void 0;
 const token_1 = require("../services/token");
 const routes_1 = require("./routes");
 const app_1 = require("../app");
 const logger_1 = require("../services/logger");
 function setRouter() {
-    routes_1.setRoutesUp();
+    (0, routes_1.setRoutesUp)();
     useRoute('get', '/healthz', healthCheck, false);
     app_1.default.instance.get('/', (req, res) => {
         res.status(200).send('powered by Greencave.co.');
@@ -31,12 +31,12 @@ function useRoute(method, route, func, locked = true) {
         }
     }
     if (locked) {
-        registerRoute(route, token_1.default.authorizeToken, routes_1.routeFn(func));
-        registerRoute(`${route}`, token_1.default.authorizeToken, routes_1.routeFn(func));
+        registerRoute(route, token_1.default.authorizeToken, (0, routes_1.routeFn)(func));
+        registerRoute(`${route}`, token_1.default.authorizeToken, (0, routes_1.routeFn)(func));
     }
     else {
-        registerRoute(route, routes_1.routeFn(func));
-        registerRoute(`${route}`, routes_1.routeFn(func));
+        registerRoute(route, (0, routes_1.routeFn)(func));
+        registerRoute(`${route}`, (0, routes_1.routeFn)(func));
     }
 }
 exports.useRoute = useRoute;
@@ -50,11 +50,9 @@ function healthCheck(req, res) {
         res.status(404).send();
     }
 }
-function denyAccess(res) {
-    return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        logger_1.logError('Access Denied.');
-        // res.status(401).send();
-    });
+async function denyAccess(res) {
+    (0, logger_1.logError)('Access Denied.');
+    res.status(401).send();
 }
 exports.denyAccess = denyAccess;
 //# sourceMappingURL=index.js.map

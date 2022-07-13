@@ -1,34 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 const logger_1 = require("./logger");
-// TODO - importar models aqui
+const users_1 = require("../database/models/users");
+const products_1 = require("../database/models/products");
+const categories_1 = require("../database/models/categories");
+const banners_1 = require("../database/models/banners");
 const Sequelize = require('sequelize');
 const config = require('../database/config');
 class DatabaseService {
-    static create() {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            if (process.env.DB_SILENCE)
-                config.logging = false;
-            DatabaseService.connection = new Sequelize(process.env.DB_BASE, process.env.DB_USER, process.env.DB_PASS, config);
-            const err = yield DatabaseService.connection.authenticate();
-            if (err) {
-                logger_1.logError(`Error connecting to DB: ${err.message}. Retrying in 10 seconds...`);
-                setTimeout(() => {
-                    DatabaseService.create();
-                }, 10000);
-            }
-            else {
-                logger_1.logInfo('Connected to Database!');
-                DatabaseService.loadModels();
-            }
-            return DatabaseService;
-        });
+    static async create() {
+        if (process.env.DB_SILENCE)
+            config.logging = false;
+        DatabaseService.connection = new Sequelize(process.env.DB_BASE, process.env.DB_USER, process.env.DB_PASS, config);
+        const err = await DatabaseService.connection.authenticate();
+        if (err) {
+            (0, logger_1.logError)(`Error connecting to DB: ${err.message}. Retrying in 10 seconds...`);
+            setTimeout(() => {
+                DatabaseService.create();
+            }, 10000);
+        }
+        else {
+            (0, logger_1.logInfo)('Connected to Database!');
+            DatabaseService.loadModels();
+        }
+        return DatabaseService;
     }
     static loadModels() {
         // logInfo('Associating Models...');
         const models = {
-        // model : model
+            users: users_1.default,
+            products: products_1.default,
+            categories: categories_1.default,
+            banners: banners_1.default
         };
         let keys = Object.keys(models);
         /**

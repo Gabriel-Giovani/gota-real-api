@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 const logger_1 = require("../services/logger");
 class Utils {
     static sendJSON(res, status, payload) {
@@ -34,13 +33,11 @@ class Utils {
     static overrideDefaults() {
         // JavaScript
         // Array
-        Array.prototype.mapAsync = function (callbackfn) {
-            return tslib_1.__awaiter(this, void 0, void 0, function* () {
-                for (let i = 0; i < this.length; i++) {
-                    yield callbackfn(this[i], i, this);
-                }
-                return this;
-            });
+        Array.prototype.mapAsync = async function (callbackfn) {
+            for (let i = 0; i < this.length; i++) {
+                await callbackfn(this[i], i, this);
+            }
+            return this;
         };
         // Text
         String.prototype.replaceAt = function (index, replacement) {
@@ -95,10 +92,8 @@ class Utils {
         text = text.replace(/[^0-9]/g, '');
         return text;
     }
-    static threadDelay(time) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return yield new Promise((r, rj) => setTimeout(() => r(true), time));
-        });
+    static async threadDelay(time) {
+        return await new Promise((r, rj) => setTimeout(() => r(true), time));
     }
     static getMimeType(mimetype) {
         try {
@@ -113,7 +108,7 @@ class Utils {
             return mime[0];
         }
         catch (err) {
-            logger_1.logError(err);
+            (0, logger_1.logError)(err);
             return mimetype;
         }
     }

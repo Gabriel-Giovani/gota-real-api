@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EErrors = void 0;
 var EErrors;
 (function (EErrors) {
     EErrors["TEST"] = "TEST";
@@ -31,6 +32,34 @@ var EErrors;
     EErrors["ACCESS_DENIED"] = "ACCESS_DENIED";
     EErrors["NO_TOKEN"] = "NO_TOKEN";
     EErrors["INVALID_TOKEN"] = "INVALID_TOKEN";
+    //CREATE USER
+    EErrors["INVALID_NAME"] = "INVALID_NAME";
+    EErrors["INVALID_USERNAME"] = "INVALID_USERNAME";
+    EErrors["INVALID_EMAIL"] = "INVALID_EMAIL";
+    EErrors["INVALID_PASSWORD"] = "INVALID_PASSWORD";
+    EErrors["INVALID_REPEATED_PASSWORD"] = "INVALID_REPEATED_PASSWORD";
+    EErrors["CREATE_USER_FAIL"] = "CREATE_USER_FAIL";
+    // CREATE PRODUCT
+    EErrors["INVALID_CATEGORY"] = "INVALID_CATEGORY";
+    EErrors["INVALID_PHOTO"] = "INVALID_PHOTO";
+    EErrors["CREATE_PRODUCT_FAIL"] = "CREATE_PRODUCT_FAIL";
+    // EDIT PRODUCT
+    EErrors["EDIT_PRODUCT_FAIL"] = "EDIT_PRODUCT_FAIL";
+    // REMOVE PRODUCT
+    EErrors["REMOVE_PRODUCT_FAIL"] = "REMOVE_PRODUCT_FAIL";
+    // CREATE CATEGORY
+    EErrors["CREATE_CATEGORY_FAIL"] = "CREATE_CATEGORY_FAIL";
+    // EDIT CATEGORY
+    EErrors["EDIT_CATEGORY_FAIL"] = "EDIT_CATEGORY_FAIL";
+    // REMOVE CATEGORY
+    EErrors["REMOVE_CATEGORY_FAIL"] = "REMOVE_CATEGORY_FAIL";
+    // CREATE BANNER
+    EErrors["CREATE_BANNER_FAIL"] = "CREATE_BANNER_FAIL";
+    EErrors["INVALID_LINK"] = "INVALID_LINK";
+    // EDIT BANNER
+    EErrors["EDIT_BANNER_FAIL"] = "EDIT_BANNER_FAIL";
+    // REMOVE BANNER
+    EErrors["REMOVE_BANNER_FAIL"] = "REMOVE_BANNER_FAIL";
 })(EErrors = exports.EErrors || (exports.EErrors = {}));
 ;
 //# sourceMappingURL=error.js.map
