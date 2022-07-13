@@ -2,7 +2,7 @@ import { useRoute } from "..";
 import BannersController from '../../controllers/Banners';
 
 const setBannersRoutes = () => {
-    useRoute('get', '/banners/all', BannersController.index, true);
+    useRoute('get', '/banners/all', BannersController.index, false);
     useRoute('get', '/banner/:id', BannersController.get, true);
     useRoute('post', '/banner', BannersController.create, true);
     useRoute('put', '/banner/:id', BannersController.edit, true);
