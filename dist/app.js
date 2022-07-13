@@ -34,7 +34,7 @@ class App {
     }
     prepareStaticFiles() {
         let staticFilesPath = `${process.cwd()}/tmp/uploads/`;
-        // logInfo(`Static files path located at '${staticFilesPath}'.`);
+        (0, logger_1.logInfo)(`Static files path located at '${staticFilesPath}'.`);
         App.instance.use('/api/files', express.static(staticFilesPath));
     }
     startServer() {
