@@ -1,6 +1,4 @@
 node_modules
-tmp/uploads/*
-!tmp/uploads/img/.gitkeep
 
 __tests__/coverage
 .nyc_output
