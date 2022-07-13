@@ -1,0 +1,12 @@
+node_modules
+tmp
+
+__tests__/coverage
+.nyc_output
+.env
+.env.test
+.env.production
+
+*.log
+
+.DS_Store
